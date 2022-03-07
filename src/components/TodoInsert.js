@@ -20,7 +20,7 @@ const TodoInsert = ({ onInsert }) => {
                 placeholder='default'
                 value={value}
                 onChange={onChange}/>
-            <button type='submit'><b>Add</b></button>
+            <button type='submit'><b>ADD</b></button>
         </form>
     );
 };
