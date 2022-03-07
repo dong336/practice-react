@@ -1,7 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import TodoTemplate from './components/TodoTemplate';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef } from 'react';
 
 function App() {
   const [items, setItems] = useState([{
@@ -22,18 +21,51 @@ function App() {
     checked: true,
   }]);
   
+  const nextId = useRef(5);
+
   const onToggle = useCallback(
     id => {
       setItems(
         items.map(
-          item => item.id === id ? {...item, checked: !item.checked} : item
+          // item => item.id === id ? {...item, checked: !item.checked} : item
+          (item) => {
+            if(item.id === id){
+              item.checked = !item.checked;
+            }
+
+            return item;
+          }
         )
       )
     }, [items],
   );
 
+  const onInsert = useCallback(
+    (text) => {
+      const item = {
+        id: nextId.current,
+        text: text,
+        checked: false,
+      };
+      setItems(items.concat(item));
+      nextId.current += 1;
+    },
+    [items],
+  );
+
+  const onRemove = useCallback(
+    (id) => {
+      setItems(items.filter((item) => item.id !== id));
+    },
+    [items],
+  );
+
   return (
-    <TodoTemplate items={items} onToggle={onToggle}/>
+    <TodoTemplate 
+      items={items} 
+      onInsert={onInsert} 
+      onToggle={onToggle} 
+      onRemove={onRemove}/>
   );
 }
 

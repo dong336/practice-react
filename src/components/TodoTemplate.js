@@ -3,11 +3,11 @@ import TodoInsert from './TodoInsert';
 import TodoList from './TodoList';
 import TodoListItem from './TodoListItem';
 
-const TodoTemplate = ({ items, props, onToggle }) => {
+const TodoTemplate = ({ items, onInsert, onToggle, onRemove }) => {
     return (
         <div className='TodoTemplate'>
-            <div className='app-title'>일정관리 어플리케이션</div>
-            <TodoInsert></TodoInsert>
+            <div className='app-title'>일정관리하기</div>
+            <TodoInsert onInsert={onInsert}></TodoInsert>
             <TodoList>
                 {
                     items.map(item => (
@@ -15,7 +15,7 @@ const TodoTemplate = ({ items, props, onToggle }) => {
                             key={item.id}
                             item={item}
                             onToggle={onToggle}
-                            >
+                            onRemove={onRemove}>
                         </TodoListItem>
                     ))
                 }
